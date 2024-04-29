@@ -2,21 +2,21 @@ import React, { useEffect, useState } from "react";
 import TransactionsList from "./TransactionsList";
 import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
-
+// 
 function AccountContainer() {
-  const [transactions, setTransactions] = useState([]);
-  const [query, setQuery] = useState("");
+    const [transactions, setTransactions] = useState([]);
+    const [query, setQuery] = useState("");
 
-  useEffect(() => {
-    fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?q=${query}`)
-      .then((resp) => resp.json())
-      .then((data) => setTransactions(data))
-      .catch((error) => console.error("Error fetching transactions: ", error));
-  }, [query]);
+    useEffect(() => {
+      fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?q=${query}`)
+        .then((resp) => resp.json())
+        .then((data) => setTransactions(data))
+        .catch((error) => console.error("Error fetching transactions: ", error));
+    }, [query]);
 
-  const handleSearch = (e) => {
-    setQuery(e.target.value);
-  };
+    const handleSearch = (e) => {
+      setQuery(e.target.value);
+    };
 
   const handleDelete = (id) => {
     fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions/${id}`, {
@@ -65,5 +65,6 @@ function AccountContainer() {
     </div>
   );
 }
+
 
 export default AccountContainer;
