@@ -4,35 +4,35 @@ import Search from "./Search";
 import AddTransactionForm from "./AddTransactionForm";
 
 function AccountContainer() {
-  const [transactions, setTransactions] = useState([])
-  const [query, setQuery] = useState("")
+  const [transactions, setTransactions] = useState([]);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
-    fetch('https://bank-of-flatiron-xkrc.onrender.com/transactions?q=' + query)
+    fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?q=${query}`)
       .then((resp) => resp.json())
-      .then(data => setTransactions(data))
-  }, [query])
+      .then((data) => setTransactions(data))
+      .catch((error) => console.error("Error fetching transactions: ", error));
+  }, [query]);
 
-  function handleSearch(e) {
-    setQuery(e.target.value)
+  const handleSearch = (e) => {
+    setQuery(e.target.value);
   };
-
 
   const handleDelete = (id) => {
     fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions/${id}`, {
       method: "DELETE",
     })
-    .then((resp) => {
-      if (resp.ok) {
-        const updatedTransactions = transactions.filter(transaction => transaction.id !== id);
-        setTransactions(updatedTransactions);
-      } else {
-        throw new Error("Failed to delete transaction");
-      }
-    })
-    .catch((error) => console.error("Error deleting transaction: ", error));
+      .then((resp) => {
+        if (resp.ok) {
+          const updatedTransactions = transactions.filter((transaction) => transaction.id !== id);
+          setTransactions(updatedTransactions);
+        } else {
+          throw new Error("Failed to delete transaction");
+        }
+      })
+      .catch((error) => console.error("Error deleting transaction: ", error));
   };
-  
+
   const handleSort = (sortBy) => {
     fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?sortBy=${sortBy}`)
       .then((resp) => resp.json())
@@ -52,7 +52,6 @@ function AccountContainer() {
       })
       .catch((error) => console.error("Error fetching sorted data: ", error));
   };
-
 
   return (
     <div>
