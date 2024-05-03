@@ -8,7 +8,7 @@ function AccountContainer() {
     const [query, setQuery] = useState("");
 
     useEffect(() => {
-      fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?q=${query}`)
+      fetch(`http://localhost:3000/transactions?q=${query}`)
         .then((resp) => resp.json())
         .then((data) => setTransactions(data))
         .catch((error) => console.error("Error fetching transactions: ", error));
@@ -19,7 +19,7 @@ function AccountContainer() {
     };
 
   const handleDelete = (id) => {
-    fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions/${id}`, {
+    fetch(`http://localhost:3000/transactions/${id}`, {
       method: "DELETE",
     })
       .then((resp) => {
@@ -34,7 +34,7 @@ function AccountContainer() {
   };
 
   const handleSort = (sortBy) => {
-    fetch(`https://bank-of-flatiron-xkrc.onrender.com/transactions?sortBy=${sortBy}`)
+    fetch(`http://localhost:3000/transactions?sortBy=${sortBy}`)
       .then((resp) => resp.json())
       .then((data) => {
         const sortedTransactions = data.sort((a, b) => {
